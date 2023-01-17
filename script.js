@@ -20,9 +20,8 @@ getRates()
 window.addEventListener('load', () => {
     const listRate = document.getElementById('list')
     const selectRate = document.getElementById('select')
-    let list = ratesArray["0"]
-
-    let result = ratesArray["0"].map((item) => {
+    // debugger
+    let result = ratesArray[0].map((item) => {
         let itemRate = document.createElement('li')
         itemRate.className = 'swiper-slide rate__item'
         itemRate.textContent = `${item.CharCode} - ${(item.Value).toFixed(2)}`
