@@ -1,6 +1,10 @@
 const rates = []
 const ratesArray = []
 
+const input = document.getElementById('input')
+const result = document.getElementById('result')
+const select = document.getElementById('select')
+
 async function getRates() {
     const data = await (await fetch('https://www.cbr-xml-daily.ru/daily_json.js')).json()
     const result = await data
@@ -40,3 +44,16 @@ let swiper = new Swiper('.mySwiper', {
     mousewhell: true,
     keyboard: true
 })
+
+//currnecy converter
+const convertValue = () => {
+    result.value = (parseFloat(input.value) / rates["0"][select.value].Value).toFixed(2)
+}
+
+const convertValueRevert = () => {
+    input.value = (parseFloat(result.value) * rates["0"][select.value].Value).toFixed(2)
+}
+
+input.oninput = convertValue
+select.oninput = convertValue
+result.oninput = convertValueRevert
