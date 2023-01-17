@@ -5,33 +5,39 @@ const input = document.getElementById('input')
 const result = document.getElementById('result')
 const select = document.getElementById('select')
 
-async function getRates() {
-    // const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js')
-    const response = await fetch('https://www.cbr-xml-daily.ru/latest.js')
-    const data = await response.json()
-    const result = await data
-    // console.log(result.rates)
-    let rate = result.rates
+fetch('https://www.cbr-xml-daily.ru/latest.js').then(result => {
+    return result.json()
+}).then(data => {
+    let rate = data.rates
     rates.push(rate)
-    // ratesArray.push(Object.values(rate))
     ratesArray.push(rates[0])
-    // console.log(rates)
-}
+})
 
-getRates()
+// async function getRates() {
+//     // const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js')
+//     const response = await fetch('https://www.cbr-xml-daily.ru/latest.js')
+//     const data = await response.json()
+//     const result = await data
+//     // console.log(result.rates)
+//     let rate = result.rates
+//     rates.push(rate)
+//     // ratesArray.push(Object.values(rate))
+//     ratesArray.push(rates[0])
+//     // console.log(rates)
+// }
+
+
+// getRates()
 //load data
 window.addEventListener('load', () => {
     const listRate = document.getElementById('list')
     const selectRate = document.getElementById('select')
-    // debugger
-    // console.log(ratesArray[0])
     const values = Object.values(ratesArray[0])
-    // console.log(Object.values(ratesArray[0]))
-    let result = Object.keys(ratesArray[0]).map((item, index) => {
+    const keys = Object.keys(ratesArray[0])
+    let result = keys.map((item, index) => {
         let itemRate = document.createElement('li')
         itemRate.className = 'swiper-slide rate__item'
         itemRate.textContent = `${item} - ${(values[index]).toFixed(2)}`
-        // itemRate.textContent = `${item.CharCode} - ${(item.Value).toFixed(2)}`
         //
         let option = document.createElement('option')
         option.textContent = `${item}`
