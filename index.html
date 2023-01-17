@@ -1,18 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Конвертер валют</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+
+    <main class="main">
+      <div class="container">
+        <h1 class="main__title">Конвертер валют</h1>
+        <!-- swiper  -->
+        <div class="rates swiper mySwiper">
+          <ul class="rates__container swiper-wrapper" id="list"></ul>
+          <div class="swiper-pagination"></div>
+        </div>
+        <!-- form  -->
+        <form class="form">
+          <div class="form__content">
+            <h2 class="form__title">Рубли в</h2>
+            <!-- valute row  -->
+            <div class="row">
+              <div class="col col-select">
+                <select id="select" class="form-control form-select"></select>
+              </div>
+            </div>
+            <!-- converter row -->
+            <div class="row grid">
+              <div class="col">
+                <input
+                  id="input"
+                  type="number"
+                  class="form-control"
+                  autofocus
+                />
+              </div>
+              <div class="col">
+                <input id="result" type="number" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="./script.js"></script>
-</body>
+
+  </body>
+
 </html>
