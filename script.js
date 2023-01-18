@@ -1,39 +1,42 @@
-const rates = []
-const ratesArray = []
-let newArr = []
 const input = document.getElementById('input')
 const result = document.getElementById('result')
 const select = document.getElementById('select')
 
-let values
-let keys
+const rates = {}
 
-fetch('https://www.cbr-xml-daily.ru/latest.js').then(result => {
-    return result.json()
-}).then(data => {
-    let rate = data.rates
-    rates.push(rate)
-    ratesArray.push(rates[0])
-    values = Object.values(ratesArray[0])
-    keys = Object.keys(ratesArray[0])
-})
+getRates()
+
+async function getRates() {
+    const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js')
+    const data = await response.json()
+    const result = await data
+    Object.assign(rates, result.Valute)
+    const keys = Object.keys(rates)
+    const values = Object.values(rates)
+    renderKeys(keys, values)
+    renderValues(values)
+}
 
 //load data
-window.addEventListener('load', () => {
+const renderKeys = (arr, val) => {
     const listRate = document.getElementById('list')
-    const selectRate = document.getElementById('select')
-    let result = keys.map((item, index) => {
+    return arr.map((item, index) => {
         let itemRate = document.createElement('li')
         itemRate.className = 'swiper-slide rate__item'
-        itemRate.textContent = `${item} - ${(values[index]).toFixed(2)}`
-        //
-        let option = document.createElement('option')
-        option.textContent = `${item}`
-        selectRate.appendChild(option)
-
+        let v = (val[index].Value).toFixed(2)
+        itemRate.textContent = `${item} - ${v}`
         return listRate.appendChild(itemRate)
     })
-})
+}
+
+const renderValues = (arr) => {
+    const selectRate = document.getElementById('select')
+    return arr.map((item) => {
+        let option = document.createElement('option')
+        option.textContent = `${item.CharCode}`
+        return selectRate.appendChild(option)
+    })
+}
 
 //swiper currencies
 let swiper = new Swiper('.mySwiper', {
@@ -46,13 +49,14 @@ let swiper = new Swiper('.mySwiper', {
     mousewhell: true,
     keyboard: true
 })
+
 //currnecy converter
 const convertValue = () => {
-    result.value = (parseFloat(input.value) * ratesArray[0][select.value]).toFixed(2)
+    result.value = (parseFloat(input.value) * rates[select.value].Value).toFixed(2)
 }
 
 const convertValueRevert = () => {
-    input.value = (parseFloat(result.value) / ratesArray[0][select.value]).toFixed(2)
+    input.value = (parseFloat(result.value) / rates[select.value].Value).toFixed(2)
 }
 
 input.oninput = convertValue
