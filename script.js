@@ -3,6 +3,7 @@ const result = document.getElementById('result')
 const select = document.getElementById('select')
 
 const rates = {}
+const currency = {}
 
 getRates()
 
@@ -10,11 +11,17 @@ async function getRates() {
     const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js')
     const data = await response.json()
     const result = await data
+    //
     Object.assign(rates, result.Valute)
     const keys = Object.keys(rates)
     const values = Object.values(rates)
     renderKeys(keys, values)
     renderValues(values)
+    //
+    const response2 = await fetch('https://www.cbr-xml-daily.ru/latest.js')
+    const data2 = await response2.json()
+    const result2 = await data2
+    Object.assign(currency, result2.rates)
 }
 
 //load data
@@ -50,14 +57,13 @@ let swiper = new Swiper('.mySwiper', {
     mousewhell: true,
     keyboard: true
 })
-
 //currnecy converter
 const convertValue = () => {
-    result.value = (parseFloat(input.value) * rates[select.value].Value).toFixed(2)
+    result.value = (parseFloat(input.value) * currency[select.value]).toFixed(2)
 }
 
 const convertValueRevert = () => {
-    input.value = (parseFloat(result.value) / rates[select.value].Value).toFixed(2)
+    input.value = (parseFloat(result.value) / currency[select.value]).toFixed(2)
 }
 
 input.oninput = convertValue
