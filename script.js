@@ -33,7 +33,8 @@ const renderValues = (arr) => {
     const selectRate = document.getElementById('select')
     return arr.map((item) => {
         let option = document.createElement('option')
-        option.textContent = `${item.CharCode}`
+        option.textContent = `${item.CharCode} - ${item.Name}`
+        option.value = item.CharCode
         return selectRate.appendChild(option)
     })
 }
