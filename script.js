@@ -59,11 +59,11 @@ let swiper = new Swiper('.mySwiper', {
 })
 //currnecy converter
 const convertValue = () => {
-    result.value = (parseFloat(input.value) * currency[select.value]).toFixed(2)
+    result.value = (parseFloat(input.value) / currency[select.value]).toFixed(2)
 }
 
 const convertValueRevert = () => {
-    input.value = (parseFloat(result.value) / currency[select.value]).toFixed(2)
+    input.value = (parseFloat(result.value) * currency[select.value]).toFixed(2)
 }
 
 input.oninput = convertValue
